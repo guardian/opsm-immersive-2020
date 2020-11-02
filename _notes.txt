@@ -1,0 +1,7 @@
+entry
+
+atoms/default/client/js/app.js
+
+
+main HTML file - 
+atoms\default\server\templates\main.html
