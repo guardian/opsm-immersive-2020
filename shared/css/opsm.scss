@@ -116,7 +116,7 @@ video {
     align-items: center;
     width: 100%;
     // height: 100%;
-    height: calc(80vh - 10rem);
+    min-height: calc(80vh - 10rem);
     background-size: cover;
     background-position: 50% 30%;
     background-image: url("<%= path %>/images/hero.png");
@@ -132,13 +132,13 @@ video {
         }
     }
 
-    @include breakpoint(large) {
+    @include breakpoint(xlarge) {
 
         h1 {
             font-size: 3rem;
         }        
         .block {
-            width: 30%;
+            width: 40%;
         }
     }
 
