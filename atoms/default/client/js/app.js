@@ -25,6 +25,46 @@ import Shaka from 'shaka-player';
 
 gsap.registerPlugin(ScrollTrigger);
 
+function scrollwatch() {
+
+	$$('.fix-on-view').forEach((target)=>{
+		const vid = target.querySelector('.fix');
+		const st = ScrollTrigger.create({
+			trigger: target,
+			// start: 'top -4rem',
+			start: 'top top',
+			//   pin: true,
+			//   pin: '.fix-on-view .fix',
+			//   pinType: 'fixed',
+			//   markers: true,
+			onEnter: e => {
+			//   console.log(e.trigger.className);
+			  vid.classList.add('pin');
+			},
+			  onLeaveBack: e => {
+				// console.log('leave back ', e.trigger.className)
+				vid.classList.remove('pin');
+			  }
+		  ,
+			  onEnterBack: e => {
+				// console.log('ENTER back ', e.trigger.className)
+				vid.classList.add('pin');
+			  }
+			  ,
+			  onLeave: e => {
+				// console.log('LEAVE ', e.trigger.className)
+				vid.classList.remove('pin');
+			},
+			// scrub: 0.2,
+			// animation: gsap.to('.chapter-1 .article-1 ', {backgroundPosition: "65% 50%", ease: Sine.easeInOut, force3D: true})
+	
+			  
+		  });	
+	});
+	
+}
+
+
 function setup() {
 
 	gsap.from('#app', {alpha: 0, duration: 2});
@@ -142,7 +182,7 @@ var app = {
 						this.key = this.get('key');
 
 						this.on('videotoggle', function (e) {
-								console.log(this.get('key'));
+								// console.log(this.get('key'));
 								// console.log(rac.get('sheets.chapter1[0].heading'));
 								// rac.set('active.playing',  true);
 								const key = this.key; //this.get('key');
@@ -213,8 +253,11 @@ var app = {
 					target: '#app',
 					template: MainHtml,
 					data: store,
-					'onrender': () => {
+					'oncomplete': () => {
 						// setup();
+						// scrollwatch();
+						gsap.from('#app', {alpha: 0, duration: 2});
+						setTimeout(scrollwatch, 500);
 					}
 					// 'videotoggle': function (e, key) {
 					// 	console.log(key);
