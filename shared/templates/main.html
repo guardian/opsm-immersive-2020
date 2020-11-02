@@ -115,7 +115,7 @@
                     <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
                 <video id="{{key}}" playsinline src="<%= path %>/video/{{file}}.mp4">
-                    <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/ch1b.vtt" default>
+                    
                 </video>
                 {{/with}}
             </div>
@@ -153,12 +153,16 @@
 
         <div class="video-container flex-container align-center padding-vertical-2">
             <div class="video">
+                {{#with videos.ch1c}}
                 <nav>
-                    <button><img src="<%= path %>/captions.svg" alt=""></button>
-                    <button><img src="<%= path %>/pause.svg" alt=""></button>
-                    <button><img src="<%= path %>/sound.svg" alt=""></button>
+                    <btnCaptions key="{{key}}"/>
+                    <btnPlay key='{{key}}' playing="{{playing}}" on-click="videotoggle" />
+                    <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
-                <video playsinline muted src="<%= path %>/video/ipswich.mp4"></video>
+                <video id="{{key}}" playsinline src="<%= path %>/video/{{file}}.mp4">
+                    
+                </video>
+                {{/with}}
             </div>
         </div>
     </article>
