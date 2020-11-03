@@ -7,7 +7,7 @@
                 <div class="cell medium-order-2 medium-shrink">
                     <img class="display-inline" src="<%= path %>/brand.svg" alt="{{sheets.global[0].Header}}" />
                 </div>
-                <div class="cell medium-auto medium-order-1">{{sheets.global[0].tag}}</div>
+                <div class="cell medium-auto medium-order-1">{{&sheets.global[0].tag}}</div>
             </div>
         </div>
     </div>
@@ -16,20 +16,25 @@
             <video id='hero' playsinline autoplay loop muted src="<%= path %>/video/{{videos.hero.file}}.mp4"></video>
             <div id="headline" class="block">
                 <h1>
-                <span>
-                    Equal access to eye care: the power of a pair of glasses to transform lives
-                </span>
+                    {{&sheets.global[0].headline}}
             </h1>
                 
                 <div id="standfirst">
-                    <p>Globally, one in seven people don’t have access to proper eye healthcare. Together, OPSM and its charity partner OneSight are aiming to change this.
-                    </p>
+                    {{&sheets.global[0].standfirst}}
                 </div>
             </div>
         </div>
       
     </div>
-    
+    <article class="frame bright padding-top-0">
+        <div class="grid-x align-center">
+            <div class="column medium-8 large-6">
+                <div class="intro">
+                    {{&sheets.global[0].intro}}
+                </div>
+            </div>
+        </div>
+    </article>
 </div>
 
 <section class="chapter-1">
@@ -38,34 +43,22 @@
         <article class="grid-container fluid position-relative">
         
             <div class="grid-x align-center">
-                <div class="column medium-6 large-4">
-                    <header id="ch1-heading">
-                        <p class="text-center c-orange">Chapter 1</p>
-                        <h2 class="text-center">
-                            Imagine a world with perfect sight
-                        </h2>
+                <div class="column medium-8 large-6">
+                    <header id="ch1-heading text-center">
+                        {{&sheets.chapter1[0].heading}}
                     </header>
                     
                 </div>
             </div>
             <div class="grid-x align-center">
-                <div class="column">
-                    <img class=" padding-vertical-2" src="<%= path %>/images/ipswich_map.jpg" alt="Ipswich map">
+                <div class="column medium-8">
+                    <img class=" padding-vertical-2" src="<%= path %>/images/ipswich_map.png" alt="Ipswich map">
                 </div>
             </div>
             <div class="grid-x align-center">
-                <div class="column medium-6 large-5">
+                <div class="column medium-8 large-5">
                     <div class="block-1">
-                        <p>One of these communities is Ipswich Kindergarten, south-west of Brisbane. At a OneSight clinic here, about 80 kids visit different testing stations while volunteer optometrists assess the health of their eyes.</p>
-<p>Keeping kids aged three and four entertained is no easy task, so OneSight sets up age-appropriate stations. Distance vision is checked through brightly coloured shapes on the wall. To measure depth perception, littlies are given 3D glasses and asked to pinch the wings off a virtual fly.</p>
-<p>It&rsquo;s good fun, and laughter rings out across the playground. But the benefits are seriously important.</p>
-<p>The kindy&rsquo;s director, Lynette, says early intervention helps parents access what they need to help their children succeed.</p>
-<p>&ldquo;Some of these things can be very subtle, but they can still have an impact,&rdquo; she says.</p>
-<p>&ldquo;Successful transition into prep is really important for success throughout school.&rdquo;</p>
-<p>At Ipswich Kindergarten, screening for vision, hearing and speech is included in the fees.</p>
-<p>Wayne Hogan, OneSight&rsquo;s country manager Australia and New Zealand, is here with the volunteers. &ldquo;We&rsquo;re here providing that service for those parents who wouldn&rsquo;t normally take their kids and get them tested,&rdquo; he says.</p>
-<p>With the clinic on site, parents feel confident their kids will be properly assessed without challenges to access or affordability.</p>
-<p>Through OneSight&rsquo;s work, all the kids have access to eye healthcare.</p>
+                        {{&sheets.chapter1[0].block1}}
                     </div>
                 </div>
             </div>
@@ -75,13 +68,13 @@
     </div>
 
     <article class="frame bright scroll-play-video">
-        <div class="grid-x align-center">
-            <div class="column medium-6 large-4">
+        <!-- <div class="grid-x align-center">
+            <div class="column medium-6 large-6">
                 <header class="interview1-heading">
-                    <h2 class="text-center">Wayne Hogan<br>Country manager,<br>Australia and New Zealand<br>OneSight</h2>
+                    <h2 class="text-center">{{&sheets.chapter1[0].interview1Heading}}</h2>
                 </header>
             </div>
-        </div>
+        </div> -->
         <div class="video-container flex-container align-center padding-vertical-2">
             <div class="video">
                 {{#with videos.ch1a}}
@@ -91,7 +84,9 @@
                     <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
                 <video id="{{key}}" playsinline src="<%= path %>/video/{{file}}.mp4">
-                    <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/ch1a.vtt" default>
+                    {{#if subs}}
+                    <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/{{subs}}">
+                    {{/if}}
                 </video>
                 {{/with}}
 
@@ -100,13 +95,13 @@
     </article>
 
     <article class="frame bright scroll-play-video">
-        <div class="grid-x align-center">
-            <div class="column medium-6 large-4">
+        <!-- <div class="grid-x align-center">
+            <div class="column medium-6 large-6">
                 <header class="interview2-heading">
-                    <h2 class="text-center">Terry Nguyen OneSight volunteer and optometrist</h2>
+                    <h2 class="text-center">{{&sheets.chapter1[0].interview2Heading}}</h2>
                 </header>
             </div>
-        </div>
+        </div> -->
         <div class="video-container flex-container align-center padding-vertical-2">
             <div class="video">
                 {{#with videos.ch1b}}
@@ -116,34 +111,45 @@
                     <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
                 <video id="{{key}}" playsinline src="<%= path %>/video/{{file}}.mp4">
-                    
+                    {{#if subs}}
+                    <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/{{subs}}">
+                    {{/if}}
                 </video>
                 {{/with}}
             </div>
         </div>
     </article>
     
-    <div class="frame steps">
-        <div class="grid-x align-center">
+    <div class="frame steps fix-on-view">
+        <div class="fix"></div>
+        <div class="grid-x align-center position-relative">
             <div class="column">
-                <h2 class="text-center">Ex non ea ea non pariatur amet</h2>
+                <h2 class="text-center">{{&sheets.chapter1[0].stepsHeading}}</h2>
     
                 <ul class="test-steps">
                     <li>
-                        <p>Quis anim sit voluptate labore</p>
-                        <video playsinline controls src="<%= path %>/video/{{videos.step1.file}}.mp4"></video>
+                        {{&sheets.chapter1[0].step1}}
+                        {{#with videos.step1}}
+                        <video id="{{key}}" class="{{#if scrollPlay}}scroll-play{{/if}}" loop playsinline {{#if muted}}muted{{/if}} src="<%= path %>/video/{{file}}.mp4"></video>
+                        {{/with}}
                     </li>
                     <li>
-                        <p>Quis anim sit voluptate labore</p>
-                        <video playsinline controls src="<%= path %>/video/{{videos.step2.file}}.mp4"></video>
+                        {{&sheets.chapter1[0].step2}}
+                        {{#with videos.step2}}
+                        <video id="{{key}}" class="{{#if scrollPlay}}scroll-play{{/if}}" loop playsinline {{#if muted}}muted{{/if}} src="<%= path %>/video/{{file}}.mp4"></video>
+                        {{/with}}
                     </li>
                     <li>
-                        <p>Quis anim sit voluptate labore</p>
-                        <video playsinline controls src="<%= path %>/video/{{videos.step3.file}}.mp4"></video>
+                        {{&sheets.chapter1[0].step3}}
+                        {{#with videos.step3}}
+                        <video id="{{key}}" class="{{#if scrollPlay}}scroll-play{{/if}}" loop playsinline {{#if muted}}muted{{/if}} src="<%= path %>/video/{{file}}.mp4"></video>
+                        {{/with}}
                     </li>
                     <li>
-                        <p>Quis anim sit voluptate labore</p>
-                        <video playsinline controls src="<%= path %>/video/{{videos.step4.file}}.mp4"></video>
+                        {{&sheets.chapter1[0].step4}}
+                        {{#with videos.step4}}
+                        <video id="{{key}}" class="{{#if scrollPlay}}scroll-play{{/if}}" loop playsinline {{#if muted}}muted{{/if}} src="<%= path %>/video/{{file}}.mp4"></video>
+                        {{/with}}
                     </li>
                 </ul>
             </div>
@@ -161,22 +167,21 @@
                     <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
                 <video id="{{key}}" playsinline src="<%= path %>/video/{{file}}.mp4">
-                    
+                    {{#if subs}}
+                    <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/{{subs}}">
+                    {{/if}}
                 </video>
                 {{/with}}
             </div>
         </div>
     </article>
     
-    <article class="frame article-2">
-        <div class="grid-x align-center">
-            <div class="column medium-6 large-4">
+    <article class="frame article-2 bg-video-container fix-on-view">
+        <video class='fix' playsinline autoplay loop muted src="<%= path %>/video/children_playing.mp4"></video>
+        <div class="grid-x align-center position-relative">
+            <div class="column medium-6 large-6">
                 <div class="outro">
-                    <p>Terry is an optometrist volunteering at Ipswich Kindergarten today, and he loves this job.</p>
-                    <p>By helping catch vision problems at this early age, he can help these kids have a brighter future.</p>
-                    <p>&ldquo;If they fall behind, it becomes very difficult for them to catch up,&rdquo; he says. &ldquo;That can lead to other negative factors down the track.&rdquo;</p>
-                    <p>If volunteers do pick up an issue, OneSight&rsquo;s care continues. Parents are given vouchers to cover additional testing and glasses at a local optometrist &ndash; at no cost to them.</p>
-                    <p>For families in hardship, this means the obstacles to good eye care vanish.</p>
+                    {{&sheets.chapter1[0].outro}}
                 </div>
             </div>
         </div>
@@ -190,40 +195,22 @@
         <article class="grid-container fluid position-relative">
         
             <div class="grid-x align-center">
-                <div class="column medium-6 large-4">
-                    <header class="heading">
-                        <p class="text-center c-orange">Chapter 2</p>
-                        <h2>
-                            The power of a pair of glasses
-                        </h2>
+                <div class="column medium-8 large-6">
+                    <header class="heading text-center">
+                        {{&sheets.chapter2[0].heading}}
                     </header>
                     
                 </div>
             </div>
             <div class="grid-x align-center">
-                <div class="column">
-                    <img class=" padding-vertical-2" src="<%= path %>/images/rozelle.jpg" alt="Rozelle map">
+                <div class="column medium-8">
+                    <img class=" padding-vertical-2" src="<%= path %>/images/rozelle_map.png" alt="Rozelle map">
                 </div>
             </div>
             <div class="grid-x align-center">
                 <div class="column medium-8 large-5">
                     <div class="block-1">
-                        <p>In the Sydney suburb of Lilyfield is We Help Ourselves (WHOS), a therapeutic community helping people through drug and alcohol dependence.</p>
-<p>Many residents have come to the residence from homelessness, trauma or instability. Eyesight has been hard to prioritise. Some residents have never had an eye test.</p>
-<p>OneSight brings eye assessment and care directly to the community.</p>
-<p>Carolyn is the nurse manager for WHOS, and says vision care is a vital part of good overall wellbeing.</p>
-<p>&ldquo;We try and look at people in a holistic way here, and part of that is addressing eyesight,&rdquo; Carolyn says.</p>
-<p>Having the clinic come on site gives residents the opportunity to have their eyes tested and, if needed, receive free glasses to correct their vision.</p>
-<p>&ldquo;Some clients probably haven&rsquo;t even realised the impact not having great vision has had on them,&rdquo; Carolyn says.</p>
-<p>&ldquo;When they get their glasses, all of a sudden that does open up the opportunity for different types of employment and study.&rdquo;</p>
-<p>Through clinics like this one, residents can have their physical needs met after years of neglect. For some, this is life-changing.</p>
-<p>&ldquo;It&rsquo;s a great day,&rdquo; Carolyn says. &ldquo;It brings all the community together.&rdquo;</p>
-<p>By providing the right care, volunteer optometrists can help residents move successfully into the next stage of their lives.</p>
-<p>Sharon, an OPSM optometrist volunteering with OneSight, says visiting the residents at WHOS is one of the highlights of her year.</p>
-<p>Without being able to see clearly, it&rsquo;s very hard to communicate. It&rsquo;s harder to learn, and harder to break a cycle of disadvantage.</p>
-<p>Good vision can make it easier to engage in a therapeutic drug and alcohol program. &ldquo;If they can see, they can more fully participate in the program,&rdquo; Sharon says.</p>
-<p>&ldquo;When it comes time to leave the program, being able to see well enables them to be more job-ready and confident to be the best person they can.</p>
-<p>&ldquo;The power of glasses really can transform lives.&rdquo;</p>
+                        {{&sheets.chapter2[0].block1}}
                     </div>
                 </div>
             </div>
@@ -234,64 +221,38 @@
 
     <article class="frame bright scroll-play-video">
         <div class="grid-x align-center">
-            <div class="column medium-6 large-4">
+            <!-- <div class="column medium-8 large-6">
                 <header class="interview1-heading">
-                    <h2 class="text-center">Carolyn Stubley
-                        Nurse manager
-                        We Help Ourselves (WHOS)
+                    <h2 class="text-center">
+                        {{&sheets.chapter2[0].interview1Heading}}
                         </h2>
                 </header>
-            </div>
+            </div> -->
         </div>
         <div class="video-container flex-container align-center padding-vertical-2">
             <div class="video">
+                {{#with videos.ch2a}}
                 <nav>
-                    <button><img src="<%= path %>/captions.svg" alt=""></button>
-                    <button><img src="<%= path %>/pause.svg" alt=""></button>
-                    <button><img src="<%= path %>/sound.svg" alt=""></button>
+                    <btnCaptions key="{{key}}"/>
+                    <btnPlay key='{{key}}' playing="{{playing}}" on-click="videotoggle" />
+                    <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
-                <video playsinline muted src="<%= path %>/video/ipswich.mp4"></video>
+                <video id="{{key}}" playsinline src="<%= path %>/video/{{file}}.mp4">
+                    {{#if subs}}
+                    <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/{{subs}}">
+                    {{/if}}
+                </video>
+                {{/with}}
             </div>
         </div>
     </article>
 
-    <article class="frame bright scroll-play-video">
-        <div class="grid-x align-center">
-            <div class="column medium-6 large-4">
-                <header class="interview2-heading">
-                    <h2 class="text-center">Sharon Holdsworth
-                        Optometrist
-                        OPSM Sydney                        
-                        </h2>
-                </header>
-            </div>
-        </div>
-        <div class="video-container flex-container align-center padding-vertical-2">
-            <div class="video">
-                <nav>
-                    <button><img src="<%= path %>/captions.svg" alt=""></button>
-                    <button><img src="<%= path %>/pause.svg" alt=""></button>
-                    <button><img src="<%= path %>/sound.svg" alt=""></button>
-                </nav>
-                <video playsinline muted src="<%= path %>/video/ipswich.mp4"></video>
-            </div>
-        </div>
-    </article>
-
-
-    <article class="frame article-2">
-        <div class="grid-x align-center">
-            <div class="column medium-6 large-4">
+    <article class="frame article-2 bg-video-container fix-on-view">
+        <video class='fix' playsinline autoplay loop muted src="<%= path %>/video/school.mp4"></video>
+        <div class="grid-x align-center position-relative">
+            <div class="column medium-8 large-6">
                 <div class="outro">
-                    <p>For many Australians, access to eye care is very difficult.</p>
-<p>It might be too time-consuming.</p>
-<p>Too complicated.</p>
-<p>Too expensive.</p>
-<p>Or simply too far away.</p>
-<p>When OneSight brings its clinics to the community, it removes these barriers to access. Support from eye care and eyewear retailers such as OPSM helps make it possible.</p>
-<p>Wayne Hogan says this is exactly what the organisation aims to do. &ldquo;OneSight is all about taking access to eye care to people who wouldn&rsquo;t necessarily have access to it,&rdquo; he says.</p>
-<p>Through OneSight&rsquo;s work, good vision is made accessible where it might have felt impossible.</p>
-<p>It becomes easier to imagine a world with perfect sight.</p>
+                    {{&sheets.chapter2[0].outro}}
                 </div>
             </div>
         </div>
@@ -301,8 +262,8 @@
 <footer>
     <div class="frame">
         <div class="grid-x align-center">
-            <div class="column medium-6 large-4">
-                <p>Amet excepteur adipisicing eiusmod deserunt deserunt magna reprehenderit Lorem. Anim dolore aliqua Lorem aliquip veniam ad adipisicing cupidatat aliqua cupidatat. Id velit ea eu velit reprehenderit ea aliqua eiusmod et. Elit elit cupidatat ipsum eu sint sit nostrud sit occaecat officia. Officia adipisicing minim deserunt ipsum. Culpa commodo anim in veniam mollit aute dolor id exercitation labore.</p>
+            <div class="column medium-8 large-6">
+                {{&sheets.global[0].cta}}
             </div>
         </div>        
     </div>
@@ -320,21 +281,7 @@
                     </li>
                 </ul>
                 <div class="text-center padding-vertical-2">
-                    <p>
-                        Head of Commercial Content: Justine O’Donnell
-                    </p>
-        
-                    <p>
-                        Design: Jacob Taylor
-                    </p>
-        
-                    <p>
-                        Developer: Zu Wanasundera
-                    </p>
-        
-                    <p>
-                        Producer: Natalie Werry
-                    </p>
+                    {{&sheets.global[0].credits}}
                 </div>
                         
             </div>

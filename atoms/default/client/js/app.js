@@ -61,6 +61,29 @@ function scrollwatch() {
 			  
 		  });	
 	});
+
+
+
+	$$('.scroll-play').forEach((target)=>{
+		const vid = target;
+		const st = ScrollTrigger.create({
+			trigger: target,
+			start: 'top 50%',
+			//   markers: true,
+			onEnter: e => {
+				vid.play();
+			},
+			onLeaveBack: e => {
+				vid.pause();
+			},
+			onEnterBack: e => {
+				vid.play();
+			},
+			onLeave: e => {
+				vid.pause();
+			},
+		  });	
+	});
 	
 }
 
@@ -223,6 +246,34 @@ var app = {
 
 				Ractive.components.btnCaptions = Ractive.extend({
 					template: '#btnCaptions',
+					data: {
+						active: false,
+						disabled: false
+					},
+					oninit: function() {
+						this.key = this.get('key');
+						this.on('toggle', function() {
+							console.log('cc');
+							this.set('active', !this.get('active'));
+							if (this.tt) {
+								if (this.get('active')) {
+									this.tt.mode = 'showing';
+								} else {
+									this.tt.mode = 'disabled';
+								}
+							}
+						});
+					},
+					onrender: function () {
+						this.tt = $(`#${this.key}`).textTracks;
+						
+						if (this.tt.length) {
+							this.tt = this.tt[0];
+						} else {
+							this.tt = false;
+							this.set('disabled', true);
+						}
+					}					
 				});
 				Ractive.components.btnMute = Ractive.extend({
 					template: '#btnMute',
@@ -241,51 +292,31 @@ var app = {
 						});
 					}
 				});
-				// Ractive.components.btnPlay.on({
-				// 	videotoggle: function (e, key) {
-						
-				// 			console.log(key);
 
-				// 	}
-				// });
-				// $('#app').innerHTML = MainHtml;
 				const rac = new Ractive({
 					target: '#app',
 					template: MainHtml,
 					data: store,
 					'oncomplete': () => {
-						// setup();
-						// scrollwatch();
 						gsap.from('#app', {alpha: 0, duration: 2});
 						setTimeout(scrollwatch, 500);
 					}
-					// 'videotoggle': function (e, key) {
-					// 	console.log(key);
-					// }
 				});
-				rac.on({
-					videotoggle: function (e, key) {
+				// rac.on({
+				// 	videotoggle: function (e, key) {
 						
-							console.log(key);
+				// 			console.log(key);
 
-					}
-					, "bntPlay.videotoggle": function (e, key) {
+				// 	}
+				// 	, "bntPlay.videotoggle": function (e, key) {
 						
-							console.log(key);
+				// 			console.log(key);
 
-					}
-				});
+				// 	}
+				// });
 
 
-				window.rac = rac;
-
-				// var wrangle = new Preflight(data.sheets.videos, key, settings)
-
-				// wrangle.process().then( (application) => {
-
-				// 	new Frontline(application)
-
-				// })
+				// window.rac = rac;
 				 
 			})
 

@@ -10,6 +10,25 @@
 
 @include foundation-text-alignment;
 
+$headingFont: 'Guardian Headline Light';
+$bodyFont: 'Guardian Text Sans Web';
+@font-face {
+    font-family: $headingFont;
+    src: url("https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Light.woff2") format("woff2"),
+    url("https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Light.woff") format("woff"),
+    url("https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: $headingFont;
+    src: url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff2") format("woff2"),
+    url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff") format("woff"),
+    url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianTextSansWeb/GuardianTextSansWeb-Regular.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+
 $c-orange: #F9B000;
 
 .c-orange {
@@ -23,11 +42,35 @@ $c-orange: #F9B000;
 }
 h1, h2, h3, h4 {
     color: var(--c-orange);
+    font-family: $headingFont;
+    line-height: 1.5;
+}
+h1 {
+    font-size: 3.75rem;
+}
+h2 {
+    font-size: 2rem;
+    @include breakpoint(medium) {
+        font-size: 2.5rem;
+
+    }
 }
 body {
     color: black;
-    line-height: 1.6;
-    font-size: 1.3rem;
+    font-family: $bodyFont;
+
+    @include breakpoint(medium) {
+        p {
+            line-height: 1.6;
+            font-size: 1.3rem;
+
+        }
+
+    }
+}
+#app a {
+   color: white;
+   text-decoration: underline;
 }
 
 p {
@@ -93,6 +136,10 @@ video {
             &:focus {
                 outline: none;
             }
+            &:disabled {
+                cursor: default;
+                opacity: 0.3;
+            }
         }
     }
 }
@@ -110,6 +157,7 @@ video {
 }
 
 .hero {
+    background-color: black;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -119,29 +167,29 @@ video {
     min-height: calc(80vh - 10rem);
     background-size: cover;
     background-position: 50% 30%;
-    background-image: url("<%= path %>/images/hero.png");
+    // background-image: url("<%= path %>/images/hero.png");
 
-
-    @include breakpoint(medium) {
-
-        h1 {
-            font-size: 2rem;
+    h1 {
+        font-size: 2.5rem;
+        @include breakpoint(medium) {
+            font-size: 2.75rem;
         }
-        .block {
+    
+        @include breakpoint(xlarge) {
+            font-size: 3.75rem;
+        }
+    }
+
+    .block {
+        width: 90%;
+        @include breakpoint(medium) {
             width: 60%;
         }
+        // @include breakpoint(xlarge) {
+        //     width: 40%;
+        // }
+
     }
-
-    @include breakpoint(xlarge) {
-
-        h1 {
-            font-size: 3rem;
-        }        
-        .block {
-            width: 40%;
-        }
-    }
-
 
     h1 {
         padding: 2rem;
@@ -151,7 +199,7 @@ video {
 
 .chapter-1 {
     .article-1 {
-        background: url("<%= path %>/images/ch1_bg.jpg") no-repeat 50%;
+        // background: url("<%= path %>/images/ch1_bg.jpg") no-repeat 50%;
         background-size: 150%;
     }
 
@@ -196,17 +244,29 @@ video {
     }
 
     .article-2 {
-        background: url("<%= path %>/images/ch2_section2_bg.jpg") no-repeat 70% 50%;
-        background-size: cover;
+        // background: url("<%= path %>/images/ch2_section2_bg.jpg") no-repeat 70% 50%;
+        // background-size: cover;
     }
 }
 
 .steps {
-    background: linear-gradient(transparent 30%, black 70%), url("<%= path %>/images/steps_bg.jpg") no-repeat 50% 0;
-    background-size: 100%;
+    position: relative;
+    .fix {
+        position: absolute;
+        background: linear-gradient(transparent 30%, black 70%), url("<%= path %>/images/steps_bg.jpg") no-repeat 50% 0;
+        background-size: 100%;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        &.pin {
+            position: fixed;
+        }
+    }
 }
 
 footer {
+    position: relative;
     h2 {
         color: white;
     }
@@ -241,3 +301,6 @@ video.fix {
     height: 100vh;
 }
 
+img {
+    max-width: 100%;
+}
