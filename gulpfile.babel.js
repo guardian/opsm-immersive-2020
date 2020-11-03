@@ -100,21 +100,8 @@ const buildJS = () => {
                 {
                     test: /\.html$/,
                     use: 'raw-loader'
-                },
-                {
-                  test: /\.csv$/,
-                  loader: 'csv-loader',
-                  options: {
-                    dynamicTyping: true,
-                    header: true,
-                    skipEmptyLines: true
-                  }
-                },
-                {
-                  test: /\.xls.?$/,
-                  loader: 'excel-loader'
                 }
-            ]
+            ],
         },
         devtool: 'source-map',
         optimization : { minimizer: [new UglifyJsPlugin()] },

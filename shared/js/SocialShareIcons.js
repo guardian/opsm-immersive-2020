@@ -5,7 +5,16 @@ import React from 'react';
 // Component Documentation 
 // https://www.npmjs.com/package/react-share
 import {
-    FacebookShareButton,FacebookIcon,TwitterShareButton,TwitterIcon,LinkedinIcon,LinkedinShareButton
+    FacebookShareButton,
+    FacebookIcon,
+    TwitterShareButton,
+    TwitterIcon,
+    LinkedinIcon,
+    LinkedinShareButton,
+    EmailShareButton,
+    EmailIcon,
+    PinterestShareButton,
+    PinterestIcon
   } from 'react-share';
 
 
@@ -14,8 +23,10 @@ import {
 let shareUrl=null, title=null, iconSize=32;
 export default class SocialBar extends React.Component {
 
-    componentWillMount(){ 
-        shareUrl = window.location.href; 
+    componentDidMount(){ 
+        shareUrl = this.props.url;
+        iconSize = this.props.iconSize || iconSize;
+        // console.log('SocialBar mount', this.props);
         /*
         if(this.props.UI.Data.ProjectSocial.ShareUrl === null){
            
@@ -24,21 +35,16 @@ export default class SocialBar extends React.Component {
             shareUrl = this.props.UI.Data.ProjectSocial.ShareUrl;
         }
         */
-        title = '';
+        title = this.props.title || '';
  
     } 
   render() {
     return(
-        <div id="ShareMe">
-        <h3>Share</h3> 
-        <ul className="ShareButtons">
-            <li
-                onClick={()=>{GA('Social Media Button Clicked','Facebook',shareUrl)} }
-            >
+        <ul className="list-unstyled">
+            <li>
                 <FacebookShareButton
                     url={shareUrl} 
                     quote={title}
-                    className="Demo__some-network__share-button"
                     
                 >
                     <FacebookIcon
@@ -47,13 +53,11 @@ export default class SocialBar extends React.Component {
                     />
                 </FacebookShareButton>
                 </li>
-            <li
-                onClick={()=>{GA('Social Media Button Clicked','Twitter',shareUrl)} }
-            >
+            <li>
                 <TwitterShareButton
                     url={shareUrl}
                     title={title}
-                    className="Demo__some-network__share-button"
+                    
                     
                     >
                     <TwitterIcon
@@ -61,24 +65,32 @@ export default class SocialBar extends React.Component {
                     round />
                 </TwitterShareButton>
                 </li>
-
-                <li
-                onClick={()=>{GA('Social Media Button Clicked','Linkdenin',shareUrl)} }
-            >
+            <li>
+                <EmailShareButton
+                    url={shareUrl}
+                    title={title}>
+                    <EmailIcon size={iconSize} round></EmailIcon>
+                </EmailShareButton>
+            </li>
+            <li>
                 <LinkedinShareButton
                     url={shareUrl}
                     title={title}
-                    className="Demo__some-network__share-button"
-                    
                     >
                     <LinkedinIcon
                     size={iconSize}
                     round />
                 </LinkedinShareButton>
-                </li>
+                </li>            
+            <li>
+                <PinterestShareButton 
+                    url={shareUrl}
+                    title={title}>
+                    <PinterestIcon size={iconSize} round></PinterestIcon>
+                </PinterestShareButton>
+            </li>
+
             </ul>
-        </div>
-     
     )
   }
 }

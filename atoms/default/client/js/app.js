@@ -1,9 +1,9 @@
 // if you want to import a module from shared/js then you can
 // just do e.g. import Scatter from "shared/js/scatter.js"
 
-import settings from 'shared/data/settings'
-import { Preflight } from 'shared/js/preflight'
-import { Frontline } from 'shared/js/frontline'
+// import settings from 'shared/data/settings'
+// import { Preflight } from 'shared/js/preflight'
+// import { Frontline } from 'shared/js/frontline'
 import { $, $$, round, numberWithCommas, wait, getDimensions } from 'shared/js/util'
 
 import MainHtml from 'shared/templates/main.html';
@@ -12,7 +12,7 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 
 import React from "react"
 import ReactDOM from 'react-dom';
-import ShareBar from '../../../../shared/js/SocialShareIcons';
+import SocialBar from 'shared/js/SocialShareIcons';
 
 import Ractive from 'ractive';
 
@@ -280,26 +280,45 @@ var app = {
 					oninit: function() {
 						this.key = this.get('key');
 						this.observe('muted', function(nv, ov){
-							console.log('muted observer', this.get('muted'));
-							this.vidEl = $(`#${this.key}`);
-							if (nv === true) {
-							}
-							this.vidEl.muted = nv
+							if (this.vidEl) this.vidEl.muted = nv
 						});
 						this.on('toggle', function() {
-							console.log(rac.get('active.muted'))
 							rac.set('active.muted', !rac.get('active.muted'));
 						});
+					},
+					onrender: function () {
+						this.vidEl = $(`#${this.key}`);
 					}
 				});
+				Ractive.components.ScrollNextButton = Ractive.extend({});
 
 				const rac = new Ractive({
 					target: '#app',
 					template: MainHtml,
 					data: store,
-					'oncomplete': () => {
+					'oncomplete': function() {
 						gsap.from('#app', {alpha: 0, duration: 2});
+						// gsap.set('#app', {alpha: 0});
+						ReactDOM.render(<SocialBar 
+							url={this.get('sheets.global[0].shareUrl')}
+							title={this.get('sheets.global[0].shareTitle')}
+						 />, document.getElementById('social'));
 						setTimeout(scrollwatch, 500);
+						// Promise.all(['#hero','#ch1bg','#ch2bg','#ch1outrobg','#ch2outrobg'].map((trg)=>{
+						// 	const $trg = $(trg), prom = new Promise(r=> {
+						// 		const fn = () => {
+						// 			$trg.removeEventListener(fn);
+						// 			r();
+						// 		}
+						// 		$trg.addEventListener('canplaythrough', fn);
+						// 	});
+						// 	return prom;
+						// })).then(()=>{
+						// 	console.log('done loading');
+						// 	gsap.to('#app', {alpha: 1, duration: 2});
+
+						// });
+
 					}
 				});
 				// rac.on({
@@ -333,4 +352,6 @@ function Footer() {
 		<h1>Hello footer</h1>
 	);
 }
-ReactDOM.render(<ShareBar/>, document.getElementById('footer'));
+// console.log(ShareBar);
+// ReactDOM.render(<SocialBar />, document.getElementById('footer'));
+// ReactDOM.render(<Footer/>, document.getElementById('footer'));
