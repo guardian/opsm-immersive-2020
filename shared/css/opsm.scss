@@ -11,7 +11,7 @@
 @include foundation-text-alignment;
 
 $headingFont: 'Guardian Headline Light';
-$bodyFont: 'Guardian Text Sans Web';
+$bodyFont: 'TS3 Text Sans';
 @font-face {
     font-family: $headingFont;
     src: url("https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Light.woff2") format("woff2"),
@@ -21,7 +21,7 @@ $bodyFont: 'Guardian Text Sans Web';
     font-style: normal;
 }
 @font-face {
-    font-family: $headingFont;
+    font-family: $bodyFont;
     src: url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff2") format("woff2"),
     url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff") format("woff"),
     url("https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianTextSansWeb/GuardianTextSansWeb-Regular.ttf") format("truetype");
@@ -120,7 +120,14 @@ video {
 .video {
 
     position: relative;
-    
+    width: 90%;
+    @include breakpoint(medium) {
+        width: 80%;
+    }
+    @include breakpoint(xlarge) {
+        width: 60%;
+        // height: 70vh;
+    }
     nav {
         position: absolute;
         z-index: 1;
@@ -278,9 +285,15 @@ footer {
     grid-template-columns: 1fr 1fr;
     column-gap: 2rem;
     li {
-        background-color: #F6F6F6;
-        color: #121212;
-        padding: 1rem;
+        margin: 1rem 0;
+        a {
+            background-color: #F6F6F6;
+            color: #121212 !important;
+            text-decoration: none !important;
+            padding: 1rem;
+            display: block;
+
+        }
     }
 }
 
@@ -320,4 +333,8 @@ img {
     .hr {
         margin: 2px 0;
     }
+}
+
+section, article {
+    position: relative;
 }

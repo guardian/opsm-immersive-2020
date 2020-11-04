@@ -22,6 +22,6 @@
 
     },
 
-    "videopath" : "https://interactive.guim.co.uk/embed/aus/2020/frontline/dev-1/episode-1"
+    "videopath" : "<%= path %>/video"
 
 }

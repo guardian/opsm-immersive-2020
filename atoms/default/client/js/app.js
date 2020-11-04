@@ -1,8 +1,8 @@
 // if you want to import a module from shared/js then you can
 // just do e.g. import Scatter from "shared/js/scatter.js"
 
-// import settings from 'shared/data/settings'
-// import { Preflight } from 'shared/js/preflight'
+import settings from 'shared/data/settings'
+import { Preflight } from 'shared/js/preflight'
 // import { Frontline } from 'shared/js/frontline'
 import { $, $$, round, numberWithCommas, wait, getDimensions } from 'shared/js/util'
 
@@ -175,7 +175,10 @@ var app = {
 		fetch(`https://interactive.guim.co.uk/docsdata/${key}.json?t=${new Date().getTime()}`).then(res => res.json())
 			.then((data) => {
 
-				console.log(data);
+				const appSettings = new Preflight(data, key, settings);
+
+
+				console.log(appSettings);
 				const videos = Object.assign(data.sheets.video);
 				// const videos = 
 				videos.forEach(i=>{
@@ -189,8 +192,8 @@ var app = {
 						key: false
 					} 
 				} );
-				console.log(store);
-				window.store = store;
+				// console.log(store);
+				// window.store = store;
 				Ractive.components.btnPlay = Ractive.extend({
 					template: '#btnPlay',
 					data: {
@@ -211,23 +214,17 @@ var app = {
 								const key = this.key; //this.get('key');
 								const vid = rac.get(`videos.${key}`);
 								// console.log(vid, this.vidEl);
-								const activeKey = rac.get('active.key');
-								if (activeKey && activeKey != key) {
-									// pause any currently playing vids
-									$(`#${activeKey}`).pause();
-									rac.set(`videos.${activeKey}.playing`, false);
-								}
-								
+
 								const vidEl = this.vidEl; //$(`#${key}`);
 								if (vid.playing) {
 									vidEl.pause();
-									rac.set('active.key', false);
+									// rac.set('active.key', false);
 								} else {
 									vidEl.play();
-									rac.set('active.key', key);
+									// rac.set('active.key', key);
 								}
-								vid.playing = !vid.playing;
-								rac.set(`videos.${key}`, vid);
+								// vid.playing = !vid.playing;
+								// rac.set(`videos.${key}`, vid);
 								// this.set('playing', vid.playing);
 
 		
@@ -241,6 +238,28 @@ var app = {
 							rac.set(`active.key`, false);
 							// this.set('playing', false);
 						});
+						this.vidEl.addEventListener('play', () => {
+							this.checkActive();
+							console.log('play', this.key)
+							rac.set(`videos.${this.key}.playing`, true);
+							rac.set(`active.key`, this.key);
+							// this.set('playing', false);
+						});
+						this.vidEl.addEventListener('pause', () => {
+							this.checkActive();
+							console.log('pause', this.key)
+							rac.set(`videos.${this.key}.playing`, false);
+						});
+					},
+					checkActive: function() {
+						const activeKey = rac.get('active.key');
+						console.log('active', activeKey);
+						if (activeKey && activeKey != this.key) {
+							// pause any currently playing vids
+							$(`#${activeKey}`).pause();
+							rac.set(`videos.${activeKey}.playing`, false);
+							rac.set(`active.key`, false);
+						}
 					}
 				});
 
@@ -297,13 +316,16 @@ var app = {
 					template: MainHtml,
 					data: store,
 					'oncomplete': function() {
-						gsap.from('#app', {alpha: 0, duration: 2});
+						gsap.from('#app', {alpha: 0, duration: 2, delay:2});
 						// gsap.set('#app', {alpha: 0});
 						ReactDOM.render(<SocialBar 
 							url={this.get('sheets.global[0].shareUrl')}
 							title={this.get('sheets.global[0].shareTitle')}
 						 />, document.getElementById('social'));
-						setTimeout(scrollwatch, 500);
+						 setTimeout(scrollwatch, 1500);
+						// window.addEventListener('load', function() {
+						// 	console.log('WINDOW on')
+						// });
 						// Promise.all(['#hero','#ch1bg','#ch2bg','#ch1outrobg','#ch2outrobg'].map((trg)=>{
 						// 	const $trg = $(trg), prom = new Promise(r=> {
 						// 		const fn = () => {
@@ -318,9 +340,73 @@ var app = {
 						// 	gsap.to('#app', {alpha: 1, duration: 2});
 
 						// });
-
+						// const vid = $('#ch1a')
+						// const svid = new Shaka.Player(vid);
+						// svid.load('http://localhost:8000/assets/video/ch1_intterview1/master_pl.mpd');
+						setupShaka(appSettings.settings);
 					}
 				});
+
+				function setupShaka(appSettings) {
+					$$('video.shaka').forEach(video=>{
+						const data = store.videos[video.id];
+						console.log(data.key, data.file);
+
+						// const video = $('#ch1a');
+						if (appSettings.app.isApp) { // HLS videos fron embed folder of gdn-cdn
+
+							console.log("Using the app")
+					
+							//console.log(`Android: ${appSettings.app.isAndroid}`)
+					
+							if (appSettings.app.Android) {
+					
+								console.log("Using Android")
+					
+								initShakaPlayer(video, `${appSettings.videopath}/${data.file}/master_pl.mpd`);
+					
+							} else {
+					
+								console.log(`Using iOS: ${appSettings.app.isIos}`)
+					
+								console.log(`iPhone: ${appSettings.app.isiPhone}`)
+					
+								console.log(`iPad: ${appSettings.app.isiPad}`)
+					
+								initHLSPlayer(video,`${appSettings.videopath}/${data.file}/master_pl.m3u8`)
+					
+							}
+					
+						} else {
+					
+							if (appSettings.app.isIos) {
+					
+								console.log(`Using iOS (not the app): ${appSettings.app.isIos}`)
+					
+								initHLSPlayer(video,`${appSettings.videopath}/${data.file}/master_pl.m3u8`)
+					
+							} else {
+					
+								if (Shaka.Player.isBrowserSupported()) {
+					
+									console.log("Using the Shaka player")
+					
+									initShakaPlayer(video, `${appSettings.videopath}/${data.file}/master_pl.mpd`);
+					
+								} else {  
+					
+									console.log("Using HLS video")
+					
+									initHLSPlayer(video, `${appSettings.videopath}/${data.file}/master_pl.m3u8`)
+					
+								} 
+					
+							}
+					
+						}
+					});
+
+				}
 				// rac.on({
 				// 	videotoggle: function (e, key) {
 						
@@ -355,3 +441,91 @@ function Footer() {
 // console.log(ShareBar);
 // ReactDOM.render(<SocialBar />, document.getElementById('footer'));
 // ReactDOM.render(<Footer/>, document.getElementById('footer'));
+
+
+function setPlayer(video, manifest) {
+
+	var self = this
+
+	var folder = (appSettings.portrait && manifest.hasSubtitles) ? 'squared' : 'standard' ;
+
+	console.log(`${appSettings.videopath}/${folder}/hls/${manifest.src.trim()}/index.m3u8`)
+
+	if (appSettings.app.isApp) { // HLS videos fron embed folder of gdn-cdn
+
+		console.log("Using the app")
+
+		//console.log(`Android: ${appSettings.app.isAndroid}`)
+
+		if (appSettings.app.Android) {
+
+			console.log("Using Android")
+
+			this.initShakaPlayer(video, `${appSettings.videopath}/${folder}/dash/${manifest.src.trim()}-manifest.mpd`);
+
+		} else {
+
+			console.log(`Using iOS: ${appSettings.app.isIos}`)
+
+			console.log(`iPhone: ${appSettings.app.isiPhone}`)
+
+			console.log(`iPad: ${appSettings.app.isiPad}`)
+
+			this.initHLSPlayer(video, manifest, folder)
+
+		}
+
+	} else {
+
+		if (appSettings.app.isIos) {
+
+			console.log(`Using iOS (not the app): ${appSettings.app.isIos}`)
+
+			this.initHLSPlayer(video, manifest, folder)
+
+		} else {
+
+			if (Shaka.Player.isBrowserSupported()) {
+
+				console.log("Using the Shaka player")
+
+				this.initShakaPlayer(video, `${appSettings.videopath}/${folder}/dash/${manifest.src.trim()}-manifest.mpd`);
+
+			} else {  
+
+				console.log("Using HLS video")
+
+				this.initHLSPlayer(video, manifest, folder)
+
+			} 
+
+		}
+
+	}
+
+}
+
+function initHLSPlayer(video, manifest, folder) {
+
+	console.log("Using HLS video")
+
+	video.setAttribute('src', manifest);
+
+	video.load();
+
+}
+
+function initShakaPlayer(video, manifest) {
+
+	var player = new Shaka.Player(video);
+
+	player.load(manifest).then(function() {
+
+
+	}).catch(function(error){
+
+		console.log('Error code', error.code, 'object', error);
+
+	});
+
+}
