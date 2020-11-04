@@ -64,7 +64,7 @@ function scrollwatch(rac) {
 
 
 
-	$$('.scroll-play,.shaka').forEach((target)=>{
+	$$('.scroll-play').forEach((target)=>{
 		const vid = target;
 		const st = ScrollTrigger.create({
 			trigger: target,

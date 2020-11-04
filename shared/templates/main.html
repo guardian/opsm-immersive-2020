@@ -87,7 +87,7 @@
                     <btnPlay key='{{key}}' playing="{{playing}}" on-click="videotoggle" />
                     <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
-                <video id="{{key}}" class="shaka " playsinline poster="<%= path %>/video/poster/{{file}}.jpg">
+                <video id="{{key}}" class="shaka {{#if scrollPlay}}scroll-play{{/if}}" playsinline poster="<%= path %>/video/poster/{{file}}.jpg">
                     {{#if subs}}
                     <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/{{subs}}">
                     {{/if}}
@@ -114,7 +114,7 @@
                     <btnPlay key='{{key}}' playing="{{playing}}" on-click="videotoggle" />
                     <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
-                <video id="{{key}}" class="shaka " playsinline src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg">
+                <video id="{{key}}" class="shaka {{#if scrollPlay}}scroll-play{{/if}} " playsinline src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg">
                     {{#if subs}}
                     <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/{{subs}}">
                     {{/if}}
@@ -170,7 +170,7 @@
                     <btnPlay key='{{key}}' playing="{{playing}}" on-click="videotoggle" />
                     <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
-                <video id="{{key}}" class="shaka " playsinline src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg">
+                <video id="{{key}}" class="shaka {{#if scrollPlay}}scroll-play{{/if}}" playsinline src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg">
                     {{#if subs}}
                     <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/{{subs}}">
                     {{/if}}
@@ -245,7 +245,7 @@
                     <btnPlay key='{{key}}' playing="{{playing}}" on-click="videotoggle" />
                     <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
-                <video id="{{key}}" class="shaka " playsinline src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg">
+                <video id="{{key}}" class="shaka {{#if scrollPlay}}scroll-play{{/if}}" playsinline src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg">
                     {{#if subs}}
                     <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/{{subs}}">
                     {{/if}}
