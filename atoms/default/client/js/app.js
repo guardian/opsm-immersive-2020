@@ -71,13 +71,13 @@ function scrollwatch(rac) {
 			start: 'top 50%',
 			//   markers: true,
 			onEnter: e => {
-				vid.play();
+				vid.play().catch(e=>console.log(e));
 			},
 			onLeaveBack: e => {
 				vid.pause();
 			},
 			onEnterBack: e => {
-				vid.play();
+				vid.play().catch(e=>console.log(e));
 			},
 			onLeave: e => {
 				vid.pause();
@@ -137,7 +137,7 @@ var app = {
 				const appSettings = new Preflight(data, key, settings);
 
 
-				console.log(appSettings);
+				// console.log(appSettings);
 				const videos = Object.assign(data.sheets.video);
 				// const videos = 
 				videos.forEach(i=>{
@@ -163,7 +163,6 @@ var app = {
 						this.key = this.get('key');
 
 						this.on('videotoggle', function (e) {
-
 
 							if (this.get('playing')) {
 								this.vidEl.pause();
@@ -196,7 +195,7 @@ var app = {
 							// console.log('observer', nv, activeKey);
 							if (nv) {
 								// vidEl.play();
-								if (activeKey && activeKey != key) {
+								if (activeKey && activeKey != this.key) {
 									// pause any currently playing vids
 									// console.log('-------pause');
 									$(`#${activeKey}`).pause();

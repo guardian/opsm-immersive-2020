@@ -120,7 +120,6 @@ video {
 .video {
 
     position: relative;
-    width: 90%;
     @include breakpoint(medium) {
         width: 80%;
     }
@@ -129,23 +128,32 @@ video {
         // height: 70vh;
     }
     nav {
-        position: absolute;
         z-index: 1;
         width: 100%;
         padding-top: 1rem;
         display: flex;
         justify-content: center;
+
+        @include breakpoint(medium) {
+            position: absolute;
+        }
     
         button {
             background: transparent;
             border: none;
             cursor: pointer;
+            width: 55px;
+            height: auto;
+            transition: width 1s ease-in-out;
             &:focus {
                 outline: none;
             }
             &:disabled {
                 cursor: default;
                 opacity: 0.3;
+            }
+            @include breakpoint(large) {
+                width: 76px;
             }
         }
     }
@@ -261,7 +269,7 @@ video {
     .fix {
         position: absolute;
         background: url("<%= path %>/images/steps_bg.jpg") no-repeat 50% 0;
-        background-size: 100%;
+        background-size: cover;
         width: 100vw;
         height: 100vh;
         top: 0;
@@ -286,8 +294,15 @@ footer {
     column-gap: 2rem;
     li {
         margin: 1rem 0;
+        display: flex;
+        // align-items: center;
+        background-color: #F6F6F6;
+        border-left: 0 solid var(--c-orange);
+        transition: border 200ms ease-in-out;
+        &:hover, &:focus {
+            border-left-width: 10px;
+        }
         a {
-            background-color: #F6F6F6;
             color: #121212 !important;
             text-decoration: none !important;
             padding: 1rem;
