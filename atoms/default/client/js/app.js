@@ -25,7 +25,7 @@ import Shaka from 'shaka-player';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function scrollwatch() {
+function scrollwatch(rac) {
 
 	$$('.fix-on-view').forEach((target)=>{
 		const vid = target.querySelector('.fix');
@@ -64,7 +64,7 @@ function scrollwatch() {
 
 
 
-	$$('.scroll-play').forEach((target)=>{
+	$$('.scroll-play,.shaka').forEach((target)=>{
 		const vid = target;
 		const st = ScrollTrigger.create({
 			trigger: target,
@@ -84,6 +84,26 @@ function scrollwatch() {
 			},
 		  });	
 	});
+	// $$('.shaka').forEach((target)=>{
+	// 	const vid = rac.get(`videos.${target.id}`);
+	// 	const st = ScrollTrigger.create({
+	// 		trigger: target,
+	// 		start: 'top 50%',
+	// 		//   markers: true,
+	// 		onEnter: e => {
+	// 			rac.set(`videos.${target.id}.playing`, true);
+	// 		},
+	// 		onLeaveBack: e => {
+	// 			rac.set(`videos.${target.id}.playing`, false);
+	// 		},
+	// 		onEnterBack: e => {
+	// 			rac.set(`videos.${target.id}.playing`, true);
+	// 		},
+	// 		onLeave: e => {
+	// 			rac.set(`videos.${target.id}.playing`, false);
+	// 		},
+	// 	  });	
+	// });
 	
 }
 
@@ -208,24 +228,37 @@ var app = {
 						this.key = this.get('key');
 
 						this.on('videotoggle', function (e) {
-								// console.log(this.get('key'));
-								// console.log(rac.get('sheets.chapter1[0].heading'));
-								// rac.set('active.playing',  true);
-								const key = this.key; //this.get('key');
-								const vid = rac.get(`videos.${key}`);
-								// console.log(vid, this.vidEl);
+							// console.log(this.get('key'));
+							// console.log(rac.get('sheets.chapter1[0].heading'));
+							// rac.set('active.playing',  true);
+							// const key = this.key; //this.get('key');
+							// const vid = rac.get(`videos.${key}`);
+							// console.log(vid, this.vidEl);
+							// const activeKey = rac.get('active.key');
+							// if (activeKey && activeKey != key) {
+							// 	// pause any currently playing vids
+							// 	$(`#${activeKey}`).pause();
+							// 	rac.set(`videos.${activeKey}.playing`, false);
+							// }
 
-								const vidEl = this.vidEl; //$(`#${key}`);
-								if (vid.playing) {
-									vidEl.pause();
-									// rac.set('active.key', false);
-								} else {
-									vidEl.play();
-									// rac.set('active.key', key);
-								}
-								// vid.playing = !vid.playing;
-								// rac.set(`videos.${key}`, vid);
-								// this.set('playing', vid.playing);
+							// const vidEl = this.vidEl; //$(`#${key}`);
+							// if (vid.playing) {
+							// 	vidEl.pause();
+							// 	rac.set('active.key', false);
+							// } else {
+							// 	vidEl.play();
+							// 	rac.set('active.key', key);
+							// }
+							// vid.playing = !vid.playing;
+							// rac.set(`videos.${key}`, vid);
+							// this.set('playing', vid.playing);
+
+							if (this.get('playing')) {
+								this.vidEl.pause();
+							} else {
+								// this.set('playing', true);
+								this.vidEl.play();
+							}
 
 		
 						});
@@ -239,28 +272,50 @@ var app = {
 							// this.set('playing', false);
 						});
 						this.vidEl.addEventListener('play', () => {
-							this.checkActive();
-							console.log('play', this.key)
-							rac.set(`videos.${this.key}.playing`, true);
-							rac.set(`active.key`, this.key);
-							// this.set('playing', false);
+							// this.checkActive();
+							// console.log('play', this.key)
+							// rac.set(`videos.${this.key}.playing`, true);
+							// rac.set(`active.key`, this.key);
+							this.set('playing', true);
 						});
 						this.vidEl.addEventListener('pause', () => {
-							this.checkActive();
-							console.log('pause', this.key)
-							rac.set(`videos.${this.key}.playing`, false);
+							// this.checkActive();
+							// console.log('pause', this.key)
+							// rac.set(`videos.${this.key}.playing`, false);
+							this.set('playing', false);
+						});
+						this.observe('playing', function(nv, ov){
+							// if (!this.vidEl) return;
+							const activeKey = rac.get('active.key');
+							// console.log('observer', nv, activeKey);
+							if (nv) {
+								// vidEl.play();
+								if (activeKey && activeKey != key) {
+									// pause any currently playing vids
+									// console.log('-------pause');
+									$(`#${activeKey}`).pause();
+									// rac.set(`videos.${activeKey}.playing`, false);
+								}								
+								rac.set('active.key', this.key);
+							} else {
+								if (activeKey && activeKey == this.key) {
+								// vidEl.pause();
+									// console.log('------set false');
+									rac.set('active.key', false);
+								}
+							}
 						});
 					},
-					checkActive: function() {
-						const activeKey = rac.get('active.key');
-						console.log('active', activeKey);
-						if (activeKey && activeKey != this.key) {
-							// pause any currently playing vids
-							$(`#${activeKey}`).pause();
-							rac.set(`videos.${activeKey}.playing`, false);
-							rac.set(`active.key`, false);
-						}
-					}
+					// checkActive: function() {
+					// 	const activeKey = rac.get('active.key');
+					// 	// console.log('active', activeKey);
+					// 	if (activeKey && activeKey != this.key) {
+					// 		// pause any currently playing vids
+					// 		$(`#${activeKey}`).pause();
+					// 		rac.set(`videos.${activeKey}.playing`, false);
+					// 		// rac.set(`active.key`, false);
+					// 	}
+					// }
 				});
 
 				Ractive.components.btnCaptions = Ractive.extend({
@@ -272,7 +327,6 @@ var app = {
 					oninit: function() {
 						this.key = this.get('key');
 						this.on('toggle', function() {
-							console.log('cc');
 							this.set('active', !this.get('active'));
 							if (this.tt) {
 								if (this.get('active')) {
@@ -322,7 +376,7 @@ var app = {
 							url={this.get('sheets.global[0].shareUrl')}
 							title={this.get('sheets.global[0].shareTitle')}
 						 />, document.getElementById('social'));
-						 setTimeout(scrollwatch, 1500);
+						 setTimeout(scrollwatch, 1500, this);
 						// window.addEventListener('load', function() {
 						// 	console.log('WINDOW on')
 						// });
