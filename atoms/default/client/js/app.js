@@ -84,6 +84,25 @@ function scrollwatch(rac) {
 			},
 		  });	
 	});
+	$$('section h2').forEach((target)=>{
+		const st = ScrollTrigger.create({
+			trigger: target,
+			start: 'top 100%',
+			scrub: 0.2,
+			animation: gsap.from(target, {scale: 1.2})
+			// animation: gsap.from(target.querySelectorAll('p'), {alpha: 0, y: 20, stagger: 0.2})
+		  });	
+	});
+	$$('.block-1 p, .outro p').forEach((target)=>{
+		const st = ScrollTrigger.create({
+			trigger: target,
+			start: 'top 100%',
+			end: 'bottom 50%',
+			scrub: 0.2,
+			animation: gsap.from(target, {alpha: 0, y: 200})
+		  });	
+	});	
+	
 	// $$('.shaka').forEach((target)=>{
 	// 	const vid = rac.get(`videos.${target.id}`);
 	// 	const st = ScrollTrigger.create({
@@ -107,86 +126,6 @@ function scrollwatch(rac) {
 	
 }
 
-
-function setup() {
-
-	gsap.from('#app', {alpha: 0, duration: 2});
-	// const st = ScrollTrigger.create({
-	// 	trigger: '.chapter-1 .article-1',
-	// 	start: 'top 80%',
-	// 	//   pin: true,
-	// 	//   pinType: 'fixed',
-	// 	//   markers: true,
-	// 	onEnter: e => {
-	// 	  console.log(e.trigger.className);
-	// 	},
-	// 	  onLeaveBack: e => {
-	// 		console.log('leave back ', e.trigger.className)
-	// 	  }
-	//   ,
-	// 	  onEnterBack: e => {
-	// 		console.log('ENTER back ', e.trigger.className)
-	// 	  }
-	// 	  ,
-	// 	  onLeave: e => {
-	// 		console.log('LEAVE ', e.trigger.className)
-		  
-	// 	},
-	// 	scrub: 0.2,
-	// 	// animation: gsap.to('.chapter-1 .article-1 ', {backgroundPosition: "65% 50%", ease: Sine.easeInOut, force3D: true})
-
-		  
-	//   });
-	
-	  $$('.scroll-play-video').forEach(i => {
-		  let vid = i.querySelector('video');
-		//   vid.remove();
-		//   vid = document.createElement('video');
-		//   i.append(vid);
-		//   vid.s
-		  console.log('>>',i, vid);
-		//   vid.src = '<%= path %>/video/loop1.mp4';
-		const svid = new Shaka.Player(vid);
-		svid.load('http://localhost:8000/assets/video/dash/loop.mpd');
-		// svid.load('<%= path %>/video/dash/loop.mpd').then(() => {
-			
-		// });
-		  
-		vid.addEventListener('loadeddata', e => {
-			console.log('state', vid.readyState);
-			if (vid.readyState >= 2) {
-				ScrollTrigger.create({
-					trigger: i,
-					start: 'top top',
-					//   pin: true,
-					//   pinType: 'fixed',
-					  markers: true,
-					onEnter: e => {
-						// const vid = i.querySelector('video');
-						// console.log('play', vid, vid.readyState);
-					//   svid.play();
-					vid.play();
-					},
-					  onLeaveBack: e => {
-						vid.pause();
-					  }
-				  ,
-					  onEnterBack: e => {
-						vid.play();
-					  }
-					  ,
-					  onLeave: e => {
-						vid.pause();
-					  
-					},
-					  
-				  });				  
-			}
-		});
-
-	  });
-	//   const target = '.scroll-play-video';	
-}
 
 var app = {
 
@@ -220,38 +159,11 @@ var app = {
 						playing: false
 					},
 					oninit: function() {
-						// console.log('com init');
-						// this.on('click', function (e, key) {
-						// 		console.log(key);
-		
-						// });
+
 						this.key = this.get('key');
 
 						this.on('videotoggle', function (e) {
-							// console.log(this.get('key'));
-							// console.log(rac.get('sheets.chapter1[0].heading'));
-							// rac.set('active.playing',  true);
-							// const key = this.key; //this.get('key');
-							// const vid = rac.get(`videos.${key}`);
-							// console.log(vid, this.vidEl);
-							// const activeKey = rac.get('active.key');
-							// if (activeKey && activeKey != key) {
-							// 	// pause any currently playing vids
-							// 	$(`#${activeKey}`).pause();
-							// 	rac.set(`videos.${activeKey}.playing`, false);
-							// }
 
-							// const vidEl = this.vidEl; //$(`#${key}`);
-							// if (vid.playing) {
-							// 	vidEl.pause();
-							// 	rac.set('active.key', false);
-							// } else {
-							// 	vidEl.play();
-							// 	rac.set('active.key', key);
-							// }
-							// vid.playing = !vid.playing;
-							// rac.set(`videos.${key}`, vid);
-							// this.set('playing', vid.playing);
 
 							if (this.get('playing')) {
 								this.vidEl.pause();
@@ -272,16 +184,10 @@ var app = {
 							// this.set('playing', false);
 						});
 						this.vidEl.addEventListener('play', () => {
-							// this.checkActive();
-							// console.log('play', this.key)
-							// rac.set(`videos.${this.key}.playing`, true);
-							// rac.set(`active.key`, this.key);
+
 							this.set('playing', true);
 						});
 						this.vidEl.addEventListener('pause', () => {
-							// this.checkActive();
-							// console.log('pause', this.key)
-							// rac.set(`videos.${this.key}.playing`, false);
 							this.set('playing', false);
 						});
 						this.observe('playing', function(nv, ov){
@@ -306,16 +212,6 @@ var app = {
 							}
 						});
 					},
-					// checkActive: function() {
-					// 	const activeKey = rac.get('active.key');
-					// 	// console.log('active', activeKey);
-					// 	if (activeKey && activeKey != this.key) {
-					// 		// pause any currently playing vids
-					// 		$(`#${activeKey}`).pause();
-					// 		rac.set(`videos.${activeKey}.playing`, false);
-					// 		// rac.set(`active.key`, false);
-					// 	}
-					// }
 				});
 
 				Ractive.components.btnCaptions = Ractive.extend({
@@ -371,19 +267,19 @@ var app = {
 					data: store,
 					'oncomplete': function() {
 						gsap.from('#app', {alpha: 0, duration: 2, delay:2});
-						// gsap.set('#app', {alpha: 0});
+						gsap.set('#app', {alpha: 0});
 						ReactDOM.render(<SocialBar 
 							url={this.get('sheets.global[0].shareUrl')}
 							title={this.get('sheets.global[0].shareTitle')}
 						 />, document.getElementById('social'));
 						 setTimeout(scrollwatch, 1500, this);
-						// window.addEventListener('load', function() {
-						// 	console.log('WINDOW on')
-						// });
+
 						// Promise.all(['#hero','#ch1bg','#ch2bg','#ch1outrobg','#ch2outrobg'].map((trg)=>{
+						// 	console.log(trg);
 						// 	const $trg = $(trg), prom = new Promise(r=> {
 						// 		const fn = () => {
-						// 			$trg.removeEventListener(fn);
+						// 			$trg.removeEventListener('canplaythrough', fn);
+						// 			console.log('done', $trg.id);
 						// 			r();
 						// 		}
 						// 		$trg.addEventListener('canplaythrough', fn);
@@ -392,12 +288,17 @@ var app = {
 						// })).then(()=>{
 						// 	console.log('done loading');
 						// 	gsap.to('#app', {alpha: 1, duration: 2});
-
+						// 	setTimeout(scrollwatch, 1500, this);
+						// 	setupShaka(appSettings.settings);
 						// });
+							setupShaka(appSettings.settings);
 						// const vid = $('#ch1a')
 						// const svid = new Shaka.Player(vid);
 						// svid.load('http://localhost:8000/assets/video/ch1_intterview1/master_pl.mpd');
-						setupShaka(appSettings.settings);
+						// const vid = $('#hero');
+						// vid.addEventListener('progress', () => {
+						// 	console.log(vid.buffered, vid.currentTime, vid.duration);
+						// });
 					}
 				});
 
@@ -406,7 +307,6 @@ var app = {
 						const data = store.videos[video.id];
 						console.log(data.key, data.file);
 
-						// const video = $('#ch1a');
 						if (appSettings.app.isApp) { // HLS videos fron embed folder of gdn-cdn
 
 							console.log("Using the app")
@@ -461,22 +361,7 @@ var app = {
 					});
 
 				}
-				// rac.on({
-				// 	videotoggle: function (e, key) {
-						
-				// 			console.log(key);
 
-				// 	}
-				// 	, "bntPlay.videotoggle": function (e, key) {
-						
-				// 			console.log(key);
-
-				// 	}
-				// });
-
-
-				// window.rac = rac;
-				 
 			})
 
 	}
@@ -487,79 +372,8 @@ var app = {
 app.init("1g5nWwUcCiTrrgHPSHOQJd_4EoAxeQLpDbRiYU4n6IEs")
 // https://interactive.guim.co.uk/docsdata/1g5nWwUcCiTrrgHPSHOQJd_4EoAxeQLpDbRiYU4n6IEs.json
 
-function Footer() {
-	return (
-		<h1>Hello footer</h1>
-	);
-}
-// console.log(ShareBar);
-// ReactDOM.render(<SocialBar />, document.getElementById('footer'));
-// ReactDOM.render(<Footer/>, document.getElementById('footer'));
 
-
-function setPlayer(video, manifest) {
-
-	var self = this
-
-	var folder = (appSettings.portrait && manifest.hasSubtitles) ? 'squared' : 'standard' ;
-
-	console.log(`${appSettings.videopath}/${folder}/hls/${manifest.src.trim()}/index.m3u8`)
-
-	if (appSettings.app.isApp) { // HLS videos fron embed folder of gdn-cdn
-
-		console.log("Using the app")
-
-		//console.log(`Android: ${appSettings.app.isAndroid}`)
-
-		if (appSettings.app.Android) {
-
-			console.log("Using Android")
-
-			this.initShakaPlayer(video, `${appSettings.videopath}/${folder}/dash/${manifest.src.trim()}-manifest.mpd`);
-
-		} else {
-
-			console.log(`Using iOS: ${appSettings.app.isIos}`)
-
-			console.log(`iPhone: ${appSettings.app.isiPhone}`)
-
-			console.log(`iPad: ${appSettings.app.isiPad}`)
-
-			this.initHLSPlayer(video, manifest, folder)
-
-		}
-
-	} else {
-
-		if (appSettings.app.isIos) {
-
-			console.log(`Using iOS (not the app): ${appSettings.app.isIos}`)
-
-			this.initHLSPlayer(video, manifest, folder)
-
-		} else {
-
-			if (Shaka.Player.isBrowserSupported()) {
-
-				console.log("Using the Shaka player")
-
-				this.initShakaPlayer(video, `${appSettings.videopath}/${folder}/dash/${manifest.src.trim()}-manifest.mpd`);
-
-			} else {  
-
-				console.log("Using HLS video")
-
-				this.initHLSPlayer(video, manifest, folder)
-
-			} 
-
-		}
-
-	}
-
-}
-
-function initHLSPlayer(video, manifest, folder) {
+function initHLSPlayer(video, manifest) {
 
 	console.log("Using HLS video")
 
