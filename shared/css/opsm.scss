@@ -230,6 +230,11 @@ video {
 
         li {
             text-align: center;
+            margin-bottom: 2rem;
+            p {
+                padding-top: 0;
+                margin-top: 0;
+            }
             &:before {
                 counter-increment: steps;
                 content: counter(steps);
@@ -274,7 +279,7 @@ video {
     position: relative;
     .fix {
         position: absolute;
-        background: url("<%= path %>/images/steps_bg.jpg") no-repeat 50% 0;
+        background: no-repeat 50% 0;
         background-size: cover;
         width: 100vw;
         height: 100vh;
