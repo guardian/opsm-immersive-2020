@@ -111,7 +111,7 @@ var app = {
 				} );
 				store.assetsPath = window.location.host.indexOf('localhost') > -1 ||  !data.sheets.global[0].assetsPath ? "<%= path %>" : data.sheets.global[0].assetsPath;
 				console.log('using path ', store.assetsPath);
-				
+
 				Ractive.components.btnPlay = Ractive.extend({
 					template: '#btnPlay',
 					data: {
@@ -261,7 +261,7 @@ var app = {
 					
 								console.log("Using Android")
 					
-								initShakaPlayer(video, `${appSettings.videopath}/${data.file}/master_pl.mpd`);
+								initShakaPlayer(video, `${store.assetsPath}/video/${data.file}/master_pl.mpd`);
 					
 							} else {
 					
@@ -271,7 +271,7 @@ var app = {
 					
 								console.log(`iPad: ${appSettings.app.isiPad}`)
 					
-								initHLSPlayer(video,`${appSettings.videopath}/${data.file}/master_pl.m3u8`)
+								initHLSPlayer(video,`${store.assetsPath}/video/${data.file}/master_pl.m3u8`)
 					
 							}
 					
@@ -281,7 +281,7 @@ var app = {
 					
 								console.log(`Using iOS (not the app): ${appSettings.app.isIos}`)
 					
-								initHLSPlayer(video,`${appSettings.videopath}/${data.file}/master_pl.m3u8`)
+								initHLSPlayer(video,`${store.assetsPath}/video/${data.file}/master_pl.m3u8`)
 					
 							} else {
 					
@@ -289,13 +289,13 @@ var app = {
 					
 									console.log("Using the Shaka player")
 					
-									initShakaPlayer(video, `${appSettings.videopath}/${data.file}/master_pl.mpd`);
+									initShakaPlayer(video, `${store.assetsPath}/video/${data.file}/master_pl.mpd`);
 					
 								} else {  
 					
 									console.log("Using HLS video")
 					
-									initHLSPlayer(video, `${appSettings.videopath}/${data.file}/master_pl.m3u8`)
+									initHLSPlayer(video, `${store.assetsPath}/video/${data.file}/master_pl.m3u8`)
 					
 								} 
 					
