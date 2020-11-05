@@ -23,18 +23,11 @@ import {
 let shareUrl=null, title=null, iconSize=32;
 export default class SocialBar extends React.Component {
 
-    componentDidMount(){ 
+    constructor(props){
+        super(props);
         shareUrl = this.props.url;
         iconSize = this.props.iconSize || iconSize;
-        // console.log('SocialBar mount', this.props);
-        /*
-        if(this.props.UI.Data.ProjectSocial.ShareUrl === null){
-           
-        }
-        else{
-            shareUrl = this.props.UI.Data.ProjectSocial.ShareUrl;
-        }
-        */
+        // console.log('SocialBar mount', shareUrl);
         title = this.props.title || '';
  
     } 
