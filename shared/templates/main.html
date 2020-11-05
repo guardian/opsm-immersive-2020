@@ -5,7 +5,7 @@
         <div class="brand-bar">
             <div class="grid-x align-justify text-center medium-text-left">
                 <div class="cell medium-order-2 medium-shrink">
-                    <a href="{{sheets.global[0].logoCta}}" target="_blank"><img class="display-inline" src="<%= path %>/brand.svg" alt="{{sheets.global[0].Header}}" /></a>
+                    <a href="{{sheets.global[0].logoCta}}" target="_blank"><img class="display-inline" src="{{assetsPath}}/brand.svg" alt="{{sheets.global[0].Header}}" /></a>
                 </div>
                 <div class="cell medium-auto medium-order-1">{{&sheets.global[0].tag}}</div>
             </div>
@@ -14,7 +14,7 @@
     <div class="frame text-center padding-top-0">
         <div class="hero bg-video-container" >
             {{#with videos.hero}}
-            <video id={{key}} playsinline autoplay loop muted src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg"></video>
+            <video id={{key}} playsinline autoplay loop muted src="{{assetsPath}}/video/{{file}}.mp4" poster="{{assetsPath}}/video/poster/{{file}}.jpg"></video>
             {{/with}}
             <div id="headline" class="block">
                 <h1>
@@ -42,7 +42,7 @@
 <section class="chapter-1">
     <div class="frame article-1 bg-video-container fix-on-view">
         {{#with videos.ch1bg}}
-        <video class='fix' id={{key}} playsinline autoplay loop muted src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg"></video>
+        <video class='fix' id={{key}} playsinline autoplay loop muted src="{{assetsPath}}/video/{{file}}.mp4" poster="{{assetsPath}}/video/poster/{{file}}.jpg"></video>
         {{/with}}
         <article class="grid-container fluid position-relative">
         
@@ -56,7 +56,7 @@
             </div>
             <div class="grid-x align-center">
                 <div class="column medium-8">
-                    <img class=" padding-vertical-2" src="<%= path %>/images/ipswich_map.png" alt="Ipswich map">
+                    <img class=" padding-vertical-2" src="{{assetsPath}}/images/ipswich_map.png" alt="Ipswich map">
                 </div>
             </div>
             <div class="grid-x align-center">
@@ -87,9 +87,9 @@
                     <btnPlay key='{{key}}' playing="{{playing}}" on-click="videotoggle" />
                     <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
-                <video id="{{key}}" class="shaka {{#if scrollPlay}}scroll-play{{/if}}" playsinline poster="<%= path %>/video/poster/{{file}}.jpg">
+                <video id="{{key}}" class="shaka {{#if scrollPlay}}scroll-play{{/if}}" playsinline poster="{{assetsPath}}/video/poster/{{file}}.jpg">
                     {{#if subs}}
-                    <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/{{subs}}">
+                    <track label="English" kind="subtitles" srclang="en" src="{{assetsPath}}/video/{{subs}}">
                     {{/if}}
                 </video>
                 {{/with}}
@@ -114,9 +114,9 @@
                     <btnPlay key='{{key}}' playing="{{playing}}" on-click="videotoggle" />
                     <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
-                <video id="{{key}}" class="shaka {{#if scrollPlay}}scroll-play{{/if}} " playsinline poster="<%= path %>/video/poster/{{file}}.jpg">
+                <video id="{{key}}" class="shaka {{#if scrollPlay}}scroll-play{{/if}} " playsinline poster="{{assetsPath}}/video/poster/{{file}}.jpg">
                     {{#if subs}}
-                    <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/{{subs}}">
+                    <track label="English" kind="subtitles" srclang="en" src="{{assetsPath}}/video/{{subs}}">
                     {{/if}}
                 </video>
                 {{/with}}
@@ -134,25 +134,25 @@
                     <li>
                         {{&sheets.chapter1[0].step1}}
                         {{#with videos.step1}}
-                        <video id="{{key}}" class="{{#if scrollPlay}}scroll-play{{/if}}" loop playsinline {{#if muted}}muted{{/if}} src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg"></video>
+                        <video id="{{key}}" class="{{#if scrollPlay}}scroll-play{{/if}}" loop playsinline {{#if muted}}muted{{/if}} src="{{assetsPath}}/video/{{file}}.mp4" poster="{{assetsPath}}/video/poster/{{file}}.jpg"></video>
                         {{/with}}
                     </li>
                     <li>
                         {{&sheets.chapter1[0].step2}}
                         {{#with videos.step2}}
-                        <video id="{{key}}" class="{{#if scrollPlay}}scroll-play{{/if}}" loop playsinline {{#if muted}}muted{{/if}} src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg"></video>
+                        <video id="{{key}}" class="{{#if scrollPlay}}scroll-play{{/if}}" loop playsinline {{#if muted}}muted{{/if}} src="{{assetsPath}}/video/{{file}}.mp4" poster="{{assetsPath}}/video/poster/{{file}}.jpg"></video>
                         {{/with}}
                     </li>
                     <li>
                         {{&sheets.chapter1[0].step3}}
                         {{#with videos.step3}}
-                        <video id="{{key}}" class="{{#if scrollPlay}}scroll-play{{/if}}" loop playsinline {{#if muted}}muted{{/if}} src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg"></video>
+                        <video id="{{key}}" class="{{#if scrollPlay}}scroll-play{{/if}}" loop playsinline {{#if muted}}muted{{/if}} src="{{assetsPath}}/video/{{file}}.mp4" poster="{{assetsPath}}/video/poster/{{file}}.jpg"></video>
                         {{/with}}
                     </li>
                     <li>
                         {{&sheets.chapter1[0].step4}}
                         {{#with videos.step4}}
-                        <video id="{{key}}" class="{{#if scrollPlay}}scroll-play{{/if}}" loop playsinline {{#if muted}}muted{{/if}} src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg"></video>
+                        <video id="{{key}}" class="{{#if scrollPlay}}scroll-play{{/if}}" loop playsinline {{#if muted}}muted{{/if}} src="{{assetsPath}}/video/{{file}}.mp4" poster="{{assetsPath}}/video/poster/{{file}}.jpg"></video>
                         {{/with}}
                     </li>
                 </ul>
@@ -170,9 +170,9 @@
                     <btnPlay key='{{key}}' playing="{{playing}}" on-click="videotoggle" />
                     <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
-                <video id="{{key}}" class="shaka {{#if scrollPlay}}scroll-play{{/if}}" playsinline poster="<%= path %>/video/poster/{{file}}.jpg">
+                <video id="{{key}}" class="shaka {{#if scrollPlay}}scroll-play{{/if}}" playsinline poster="{{assetsPath}}/video/poster/{{file}}.jpg">
                     {{#if subs}}
-                    <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/{{subs}}">
+                    <track label="English" kind="subtitles" srclang="en" src="{{assetsPath}}/video/{{subs}}">
                     {{/if}}
                 </video>
                 {{/with}}
@@ -182,7 +182,7 @@
     
     <article class="frame article-2 bg-video-container fix-on-view">
         {{#with videos.ch1outrobg}}
-        <video class='fix' id={{key}} playsinline autoplay loop muted src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg"></video>
+        <video class='fix' id={{key}} playsinline autoplay loop muted src="{{assetsPath}}/video/{{file}}.mp4" poster="{{assetsPath}}/video/poster/{{file}}.jpg"></video>
         {{/with}}
         <div class="grid-x align-center position-relative">
             <div class="column medium-6 large-6">
@@ -198,7 +198,7 @@
 <section class="chapter-2">
     <div class="frame article-1 bg-video-container fix-on-view">
         {{#with videos.ch2bg}}
-        <video class='fix' id={{key}} playsinline autoplay loop muted src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg"></video>
+        <video class='fix' id={{key}} playsinline autoplay loop muted src="{{assetsPath}}/video/{{file}}.mp4" poster="{{assetsPath}}/video/poster/{{file}}.jpg"></video>
         {{/with}}
         <article class="grid-container fluid position-relative">
         
@@ -212,7 +212,7 @@
             </div>
             <div class="grid-x align-center">
                 <div class="column medium-8">
-                    <img class=" padding-vertical-2" src="<%= path %>/images/rozelle_map.png" alt="Rozelle map">
+                    <img class=" padding-vertical-2" src="{{assetsPath}}/images/rozelle_map.png" alt="Rozelle map">
                 </div>
             </div>
             <div class="grid-x align-center">
@@ -245,9 +245,9 @@
                     <btnPlay key='{{key}}' playing="{{playing}}" on-click="videotoggle" />
                     <btnMute key="{{key}}" muted="{{active.muted}}" />
                 </nav>
-                <video id="{{key}}" class="shaka {{#if scrollPlay}}scroll-play{{/if}}" playsinline poster="<%= path %>/video/poster/{{file}}.jpg">
+                <video id="{{key}}" class="shaka {{#if scrollPlay}}scroll-play{{/if}}" playsinline poster="{{assetsPath}}/video/poster/{{file}}.jpg">
                     {{#if subs}}
-                    <track label="English" kind="subtitles" srclang="en" src="<%= path %>/video/{{subs}}">
+                    <track label="English" kind="subtitles" srclang="en" src="{{assetsPath}}/video/{{subs}}">
                     {{/if}}
                 </video>
                 {{/with}}
@@ -257,7 +257,7 @@
 
     <article class="frame article-2 bg-video-container fix-on-view">
         {{#with videos.ch2outrobg}}
-        <video class='fix' id={{key}} playsinline autoplay loop muted src="<%= path %>/video/{{file}}.mp4" poster="<%= path %>/video/poster/{{file}}.jpg"></video>
+        <video class='fix' id={{key}} playsinline autoplay loop muted src="{{assetsPath}}/video/{{file}}.mp4" poster="{{assetsPath}}/video/poster/{{file}}.jpg"></video>
         {{/with}}
         <div class="grid-x align-center position-relative">
             <div class="column medium-8 large-6">
