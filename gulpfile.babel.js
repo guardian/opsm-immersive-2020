@@ -30,7 +30,8 @@ const live = gutil.env._.indexOf('deploylive') > -1
 
 const version = `v/${Date.now()}`;
 const s3Path = `atoms/${config.path}`;
-const assetPath = isDeploy ? `${cdnUrl}/${s3Path}/assets/${version}` : '../assets';
+// const assetPath = isDeploy ? `${cdnUrl}/${s3Path}/assets/${version}` : '../assets';
+const assetPath = '../assets';
 
 // hack to use .babelrc environments without env var, would be nice to
 // be able to pass "client" env through to babel
@@ -132,7 +133,7 @@ const buildCSS = () => {
       ]
     }).on("error", sass.logError))
     .pipe(rename((path) => {
-      path.dirname = path.dirname.replace(/client\\css/g, "");
+      path.dirname = path.dirname.replace(/client\/css/g, "");
     }))
     .pipe(template({
       path: assetPath,
@@ -265,7 +266,8 @@ const getLogs = async(cb) => {
 }
 
 const build = series(clean, parallel(buildJS, buildCSS, render, assets));
-const deploy = series(build, upload)
+// const deploy = series(build, upload)
+const deploy = series(build)
 
 
 exports.build = build;
