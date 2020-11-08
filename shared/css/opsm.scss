@@ -29,7 +29,7 @@ $bodyFont: 'TS3 Text Sans';
     font-style: normal;
 }
 
-$c-orange: #F9B000;
+$c-orange: #F3AC59;
 
 .c-orange {
     color: $c-orange;
@@ -166,6 +166,9 @@ video {
     //     height: calc(80vh - 10rem);
 
     // }
+    .brand {
+        width: 120px;
+    }
 }
 
 .brand-bar {
@@ -307,7 +310,7 @@ footer {
         margin: 1rem 0;
         display: flex;
         // align-items: center;
-        background-color: #F6F6F6;
+        background-color: #B8B8B8;
         border-left: 0 solid var(--c-orange);
         transition: border 200ms ease-in-out;
         &:hover, &:focus {
