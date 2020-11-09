@@ -1,5 +1,5 @@
 var el = document.createElement('script');
-el.src = 'app.js';
+el.src = '<%= atomPath %>/app.js';
 document.body.appendChild(el);
 
 
