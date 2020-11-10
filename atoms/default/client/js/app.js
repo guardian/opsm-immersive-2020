@@ -77,7 +77,7 @@ function scrollwatch(rac) {
 		const st = ScrollTrigger.create({
 			trigger: target,
 			start: 'top 100%',
-			end: 'bottom 50%',
+			end: 'top 50%',
 			scrub: 0.2,
 			animation: gsap.from(target, {alpha: 0, y: 200})
 		  });	

@@ -7,7 +7,11 @@
                 <div class="cell medium-order-2 medium-shrink">
                     <a href="{{sheets.global[0].logoCta}}" target="_blank"><img class="display-inline" class="brand" src="{{assetsPath}}/brand.svg" alt="{{sheets.global[0].Header}}" /></a>
                 </div>
-                <div class="cell medium-auto medium-order-1 flex-container align-middle">{{&sheets.global[0].tag}}</div>
+                <div class="cell medium-auto medium-order-1">
+                    <div class="tag">
+                        {{&sheets.global[0].tag}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -290,7 +294,7 @@
     <div class="frame">
         <div class="">
             <div class="grid-container">
-                <h2 class="padding-bottom-1">{{&sheets.global[0].relatedContentTitle}}</h2>
+                <h3 class="padding-bottom-1">{{&sheets.global[0].relatedContentTitle}}</h3>
                 <ul class="list-unstyled related-content">
                     {{#each sheets.related}}
                     <li>
